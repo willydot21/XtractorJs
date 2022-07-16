@@ -1,13 +1,18 @@
 
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import routes from './routes/routes';
+
+dotenv.config({
+  path: __dirname+'.env'
+})
 
 const app = express();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3000;
 
-const whiteList:string[] = ['http://192.168.18.13'];
+const whiteList:string[] = ['http://localhost:3000'];
 
 app.use( cors({ origin: whiteList }) );
 

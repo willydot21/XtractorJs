@@ -4,6 +4,11 @@ import { _FEMBED_ } from '../../@types/fembed';
 
 export default class Xtractor {
 
+  /**
+   * @param embeded Embeded is: "fembed", "gcloud", "feurl", "vcdn" or "embedsito" link.
+   * @description Gets id from embeded param and make post request to fembed api.
+   * @returns "_FEMBED_" object with requested id. See /@types/fembed for object properties.
+   */
   static async extractFembed (embeded:string): Promise<_FEMBED_> {
     
     try {
