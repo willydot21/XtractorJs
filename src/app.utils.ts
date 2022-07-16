@@ -1,6 +1,11 @@
+
 import { VerifyOriginFn } from "../@types/app.utils";
 
-const whiteList:string[] = ['http://localhost:3001', 'https://kinghub-anime.netlify.app'];
+const whiteList:string[] = [
+  'http://localhost:3001', 
+  'https://kinghub-anime.netlify.app', 
+  'http://localhost:3000' 
+];
 
 export const verifyOrigin:VerifyOriginFn = (origin, callback) => {
 
