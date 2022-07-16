@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     res.json(fembedItem).end();
   
-  } else { res.json({ success:false, data:'"url" is not defined' }) }
+  } else { res.json({ success:false, data:"'url' is not defined" }) }
 
 });
 
