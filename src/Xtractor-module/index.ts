@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { getRandomHeaders } from './utils';
 import { _FEMBED_ } from '../../@types/fembed';
 
 export default class Xtractor {
@@ -21,7 +22,7 @@ export default class Xtractor {
   
         const url = `https://www.fembed.com/api/source/${id[3]}`;
         
-        const post = await axios(url, { method:'post' });
+        const post = await axios(url, { method:'post', headers:getRandomHeaders() });
     
         const json = await post.data;
 
