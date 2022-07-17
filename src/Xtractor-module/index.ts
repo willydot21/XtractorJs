@@ -2,7 +2,7 @@
 import { getRandomAgent } from './utils';
 import { _FEMBED_ } from '../../@types/fembed';
 import axios from 'axios';
-
+import { exec } from 'child_process';
 
 export default class Xtractor {
 
@@ -22,23 +22,33 @@ export default class Xtractor {
       if (id) {
 
         const url = `https://www.fembed.com/api/source/${id[3]}`;
-        
-        const post = await axios.post(url,{ 
-          method:'post', 
-          headers:{
-            accept: '*/*',
-            origin:'https://vanfem.com',
-            referer:'https://vanfem.com/v/d5er3axzd8ngrqy',
-            'set-fetch-mode':'cors',
-            'set-fetch-site':'same-origin',
-            'x-requested-with':'XMLHttpRequest',
-            'user-agent':getRandomAgent()
-          }, 
+      
+        // const post = await axios.post(url,{ 
+        //   method:'post', 
+        //   headers:{
+        //     accept: '*/*',
+        //     'set-fetch-mode':'cors',
+        //     'x-requested-with':'XMLHttpRequest',
+        //     'user-agent':getRandomAgent()
+        //   }, 
+        // });
+        // const json = post.data;
+
+        const data: _FEMBED_ = await new Promise((resolve, reject) => {
+
+          exec('curl -X POST -H "Content-Type: application/json" '+url, (error, stdout, stderr) => {
+
+            if (stdout) resolve(JSON.parse(stdout));
+
+            if (error) reject({ success:false, data:error });
+            
+          });
+
         });
-    
-        const json = post.data;
         
-        return json;
+        console.log(data);
+        
+        return data;
       
       } else { throw Error("Url passed is not valid"); }
   
