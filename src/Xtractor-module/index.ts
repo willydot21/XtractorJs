@@ -1,7 +1,8 @@
 
-import { getRandomHeaders } from './utils';
+import { getRandomAgent } from './utils';
 import { _FEMBED_ } from '../../@types/fembed';
-import got from 'got';
+import axios from 'axios';
+
 
 export default class Xtractor {
 
@@ -22,14 +23,20 @@ export default class Xtractor {
 
         const url = `https://www.fembed.com/api/source/${id[3]}`;
         
-        const post = await got.post(url,{ 
+        const post = await axios.post(url,{ 
           method:'post', 
-          'headers':getRandomHeaders(), 
-          body:'r=&d=www.fembed.com',
-          throwHttpErrors: false
-        }).json();
+          headers:{
+            accept: '*/*',
+            origin:'https://vanfem.com',
+            referer:'https://vanfem.com/v/d5er3axzd8ngrqy',
+            'set-fetch-mode':'cors',
+            'set-fetch-site':'same-origin',
+            'x-requested-with':'XMLHttpRequest',
+            'user-agent':getRandomAgent()
+          }, 
+        });
     
-        const json = post as _FEMBED_;
+        const json = post.data;
         
         return json;
       
