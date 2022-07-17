@@ -1,7 +1,7 @@
 
-import axios from 'axios';
 import { getRandomHeaders } from './utils';
 import { _FEMBED_ } from '../../@types/fembed';
+import got from 'got';
 
 export default class Xtractor {
 
@@ -19,13 +19,18 @@ export default class Xtractor {
       const id = embeded.match(id_regex);
       
       if (id) {
-  
+
         const url = `https://www.fembed.com/api/source/${id[3]}`;
         
-        const post = await axios(url, { method:'post', headers:getRandomHeaders() });
+        const post = await got.post(url,{ 
+          method:'post', 
+          'headers':getRandomHeaders(), 
+          body:'r=&d=www.fembed.com',
+          throwHttpErrors: false
+        }).json();
     
-        const json = await post.data;
-
+        const json = post as _FEMBED_;
+        
         return json;
       
       } else { throw Error("Url passed is not valid"); }
