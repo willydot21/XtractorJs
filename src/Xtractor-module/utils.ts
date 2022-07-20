@@ -1,3 +1,4 @@
+import axios from "axios";
 
 const HEADERS = [
   'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/605.1.15 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/605.1.15',

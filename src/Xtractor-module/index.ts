@@ -4,6 +4,7 @@ import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import { XtractorError } from '../../@types/xtractor';
 import { getRandomAgent } from './utils';
+import { decode } from 'html-entities';
 
 export default class Xtractor {
 
@@ -84,7 +85,45 @@ export default class Xtractor {
 
     }// end if token exist.
 
-    return {success:false, data:'No token found'}
+    return {success:false, data:'Error: No token found'}
+
+  }
+
+  static async extractOkru (video:string): Promise<any> {
+
+    /*
+    const url = "https://ok.ru/dk?cmd=videoPlayerMetadata&mid=" + video.substr(video.lastIndexOf('/') + 1);
+
+    const post = await axios.post(url, {
+      'headers': {
+        'user-agent':"Mozilla/5.0 (Linux; Android 9; Redmi Note 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36"
+      }
+    });
+    */
+
+    const req = await axios.get(video,{
+      headers:{ 'user-agent':'Mozilla/5.0 (Linux; Android 9; Redmi Note 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36' }
+    });
+
+    const data:string = await req.data;
+
+    const regex = new RegExp('data\-video\=\"(.*?)\"');
+
+    const match = data.match(regex);
+
+    if (match) {
+
+      const meta = JSON.parse(decode(match[1]));
+
+      meta.videoName = meta.videoName.replace('.', '_').replace('/', '_');
+
+      const m3u8Pl = await axios.get(meta.videoSrc, {
+        headers:{ 'user-agent':'Mozilla/5.0 (Linux; Android 9; Redmi Note 5A) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Mobile Safari/537.36' }
+      });
+
+      return m3u8Pl;
+
+    }
 
   }
 
