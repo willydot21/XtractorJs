@@ -1,4 +1,3 @@
-import axios from "axios";
 
 const HEADERS = [
   'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/605.1.15 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/605.1.15',
@@ -123,4 +122,4 @@ const HEADERS = [
   'Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/603.9 (KHTML, like Gecko) Chrome/90.0.4416.77 Safari/603.9'
 ]
 
-export const getRandomAgent = () => HEADERS[Math.floor( Math.random() * HEADERS.length )];
+export const getRandomAgent = () => HEADERS[Math.floor(Math.random() * HEADERS.length)];
